@@ -16,8 +16,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // If you run the express app from another directory, it's safer to 
 // use the absolute path of the directory that you want to serve:
 app.use('/build', express.static(path.join(__dirname, '../build')));
-app.use('/assets', express.static(path.resolve(__dirname, '../assets')))
-
+// app.use('/assets', express.static(path.resolve(__dirname, '../assets')))
+app.use(express.static("assets"));
 // Get request for the root directory sends back the index.html
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../views/index.html'))

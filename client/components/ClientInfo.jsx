@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useForm  } from 'react-hook-form';
+import { Switch, Route, Link, BrowserRouter as Router } from 'react-router-dom';
+import { DietForm } from './DietForm.jsx';
+import { globalContext } from '../../contexts/globalContext.js'
 
-function ClientInfo({ clientid, firstname, lastname, email }) {
+function ClientInfo({ clientid, contracts, firstname, lastname, email, age, gender, weight_lbs, height }) {
   const { register, handleSubmit, watch, errors } = useForm();
+  const { clientData, setClientData } = useContext(globalContext);
 
   const fetchData = () => {
-    fetch(`/api/clientInfo/${clientid}`, {
+    fetch(`/api/clientinfo/${clientid}`, {
       method: 'GET',
       headers: { 'content-type': 'application/json' },
     })
@@ -16,19 +20,43 @@ function ClientInfo({ clientid, firstname, lastname, email }) {
       .catch((err) => console.log(err));
   };
 
-  // onSubmit handler to submit additional trainee metrics to DB.
-  const onSubmit = (data) => {
-    fetch(`/api/creatediet/${clientid}`, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'content-type': 'application/json',
-      },
-    });
-  };
+// TODO: add route #13 to get diet_table info
 
   return (
-    <div>
+    <Router>
+        <div className="navbar">
+          <p className="navbar__name">{`${firstname} ${lastname} ${email}`}</p>
+        </div>
+        <p>{`contract: ${contracts}`}</p>
+        <p>{`Age: ${age}`}</p>
+        <p>{`Gender: ${gender}`}</p>
+        <p>{`Weight: ${weight_lbs}`}</p>
+        <p>{`Height: ${height}`}</p>
+
+            <div className="main__route">
+              <Link to={'/DietForm' + firstname + lastname + clientid} className="main__link">
+                Add New Diet
+              </Link>
+            </div>
+        <div className="cardContainer">
+
+        </div>
+        <Switch>
+          <Route exact path={'/DietForm' + firstname + lastname + clientid}>
+            <DietForm 
+              clientid={clientid}
+            />
+          </Route>
+        </Switch>
+    </Router>
+  );
+}
+export default ClientInfo;
+
+
+/*
+
+<div>
       <div className="clientInfo__left">
         <img src="#" />
         <p>Trainee Name: {`${firstname} ${lastname}`}</p>
@@ -80,8 +108,5 @@ function ClientInfo({ clientid, firstname, lastname, email }) {
 
           <input type="submit" />
         </form>
-      </div>
-    </div>
-  );
-}
-export default ClientInfo;
+
+        */

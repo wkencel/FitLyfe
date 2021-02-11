@@ -11,15 +11,18 @@ import React, { useState, createContext } from 'react';
 const globalState = {
   clients: [],
   setClients: () => {},
+  clientData: [],
+  setClientData: () => {}
 };
 
 // create a global context with that global state
 export const globalContext = createContext(globalState);
 
 export const GlobalProvider = (props) => {
-  const [clients, setClients] = useState([]);
+  const [clients,  setClients] = useState([]);
+  const [clientData, setClientData] = useState([])
   return (
-    <globalContext.Provider value={{ clients, setClients }}>
+    <globalContext.Provider value={{ clients, clientData, setClients, setClientData}}>
       {props.children}
     </globalContext.Provider>
   );
