@@ -39,26 +39,16 @@ const traineeController = {
     });
   },
 
-  async createTrainee(req, res, next) {
+  createTrainee(req, res, next) {
     const { contracts, firstname, lastname, email, age, gender, weight_lbs, height } = req.body;
     const createTraineeQuery =
-      'INSERT INTO client_table (contracts, firstname, lastname, email) VALUES ($1, $2, $3, $4)';
-      'INSERT INTO biometrics_table (age, gender, weight_lbs, height ) VALUES ($5, $6, $7, $8)';
-
-    await pool.query(
+      'INSERT INTO client_table (contracts, firstname, lastname, email, age, gender, weight_lbs, height) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)'
+    pool.query(
       createTraineeQuery,
       [contracts, firstname, lastname, email, age, gender, weight_lbs, height ],
       (err, results) => {
-        if (err) {
-          console.log('CREATE Trainee Controller Error:', err);
-          next(err);
-        } else {
-          res.locals.createTrainee = req.body;
-          console.log('GET ONE Trainee Controller SUCCESS');
-          next();
-        }
-
-        
+        if (err) return sendStatus(401)
+         return next();
       },
     );
 
@@ -74,13 +64,8 @@ const traineeController = {
       updateTraineeQuery,
       [firstname, lastname, clientid],
       (err, results) => {
-        if (err) {
-          console.log('UPDATE Trainee Controller Error:', err);
-          next(err);
-        } else {
-          console.log('UPDATE Trainee Controller SUCCESS');
+        if (err) return sendStatus(401)
           next();
-        }
       },
     );
   },

@@ -15,6 +15,7 @@ function ClientForm() {
   const { register, handleSubmit, watch, errors } = useForm();
 
   const onSubmit = (data) => {
+    console.log(data)
     fetch('/api/newTrainee', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -51,6 +52,7 @@ function ClientForm() {
         </FormLabel>
 
         <FormLabel>
+        
           Contracts
           <Input name="contracts" ref={register({ required: true })}></Input>
         </FormLabel>
