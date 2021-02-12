@@ -39,5 +39,11 @@ router.delete('/removeTrainee/:clientid', deleteTrainee, (req, res) => {
   console.log('removeTrainee DELETE REQUEST SUCCESS')
 });
 
+//add a trainee diet
+// router.post('/adddailydiet/:clientid', createDiet, (req, res) => {
+//   res.status(200).send(`water intake ${req.body.daily_water_intake_ounces} has been created.`)
+//   console.log('diet POST REQUEST SUCCESS')
+// });
+
 
 module.exports = router;

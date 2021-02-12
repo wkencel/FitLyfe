@@ -8,17 +8,17 @@ export function DietForm({ clientid }) {
   const history = useHistory();
   const { register, handleSubmit, watch, errors } = useForm();
   // create new diet
-  const onSubmit = (data) => {
-    fetch('/api/adddailydiet/' + clientid, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'content-type': 'application/json',
-      },
-    }).then((data) => console.log(data));
-    history.goBack();
-  };
-  console.log('client id', clientid);
+  // const onSubmit = (data) => {
+  //   fetch('/api/adddailydiet/' + clientid, {
+  //     method: 'POST',
+  //     body: JSON.stringify(data+clientid),
+  //     headers: {
+  //       'content-type': 'application/json',
+  //     },
+  //   }).then((data) => console.log(data+clientid));
+  //   history.goBack();
+  // };
+  // console.log('client id', clientid);
   return (
     <Box>
       <form

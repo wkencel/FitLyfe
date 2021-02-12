@@ -67,7 +67,7 @@ function ClientForm() {
 
         <FormLabel>
           Weight
-          <Input name="weight" ref={register({ required: true })}></Input>
+          <Input name="weight_lbs" ref={register({ required: true })}></Input>
         </FormLabel>
 
         <FormLabel>

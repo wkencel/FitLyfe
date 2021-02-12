@@ -54,16 +54,16 @@ function ClientInfo({
         <p className="clientInfo__metrics">{`${email}`}</p>
         <div className="clientInfo__divider"></div>
         <p className="clientInfo__metrics" id="age">
-          Age{' '}
+          Age: {age}
         </p>
         <p className="clientInfo__metrics" id="gender">
-          Gender{' '}
+          Gender: {gender}
         </p>
         <p className="clientInfo__metrics" id="weight">
-          Weight{' '}
+          Weight: {weight_lbs}
         </p>
         <p className="clientInfo__metrics" id="height">
-          Height{' '}
+          Height: {height}
         </p>
         <div className="clientInfo__divider"></div>
 

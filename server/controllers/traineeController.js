@@ -8,8 +8,7 @@ pool.on('error', (err, client) => {
 const traineeController = {
   async getAllTrainees(req, res, next) {
     const getAllTraineesQuery =
-      'SELECT * FROM client_table ORDER BY clientid ASC';
-
+      'SELECT client_table.*, biometrics_table.* FROM client_table INNER JOIN biometrics_table ON biometrics_table.clientID=client_table.ClientID';
     await pool.query(getAllTraineesQuery, (err, results) => {
       if (err) {
         console.log('GET ALL Trainees Controller Error:', err);
@@ -41,13 +40,14 @@ const traineeController = {
   },
 
   async createTrainee(req, res, next) {
-    const { contracts, firstname, lastname, email } = req.body;
+    const { contracts, firstname, lastname, email, age, gender, weight_lbs, height } = req.body;
     const createTraineeQuery =
       'INSERT INTO client_table (contracts, firstname, lastname, email) VALUES ($1, $2, $3, $4)';
+      'INSERT INTO biometrics_table (age, gender, weight_lbs, height ) VALUES ($5, $6, $7, $8)';
 
     await pool.query(
       createTraineeQuery,
-      [contracts, firstname, lastname, email],
+      [contracts, firstname, lastname, email, age, gender, weight_lbs, height ],
       (err, results) => {
         if (err) {
           console.log('CREATE Trainee Controller Error:', err);
@@ -57,8 +57,11 @@ const traineeController = {
           console.log('GET ONE Trainee Controller SUCCESS');
           next();
         }
+
+        
       },
     );
+
   },
 
   async updateTrainee(req, res, next) {
@@ -80,6 +83,26 @@ const traineeController = {
         }
       },
     );
+  },
+  async createDiet(req, res, next) {
+    const { daily_water_intake_ounces, daily_calorie_intake_grams, daily_macros_intake_grams, clientid } = req.body;
+    const createDietQuery =
+      'INSERT INTO diet_table (daily_water_intake_ounces, daily_calorie_intake_grams	, daily_macros_intake_grams) VALUES ($1, $2, $3) WHERE clientid=$4';
+
+    await pool.query(
+      createDietQuery,
+      [daily_water_intake_ounces, daily_calorie_intake_grams, daily_macros_intake_grams, clientid],
+      (err, results) => {
+        if (err) {
+          console.log('CREATE diet Controller Error:', err);
+          next(err);
+        } else {
+          res.locals.createDiet = req.body;
+          console.log('GET ONE diet Controller SUCCESS');
+          next();
+        }
+      },
+    )
   },
 
   async deleteTrainee(req, res, next) {

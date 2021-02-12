@@ -62,6 +62,7 @@ function App() {
                   firstname={clients[i].firstname}
                   lastname={clients[i].lastname}
                   email={clients[i].email}
+                  
                 />
               </button>
             </Link>
@@ -84,6 +85,10 @@ function App() {
               lastname={clients[i].lastname}
               email={clients[i].email}
               clientid={clients[i].clientid}
+              age={clients[i].age}
+              gender={clients[i].gender}
+              height={clients[i].height}
+              weight_lbs={clients[i].weight_lbs}
             />
           </div>
         </Route>
